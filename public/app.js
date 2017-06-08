@@ -15,10 +15,7 @@ api.findSeries('avengers').then(serie => {
 	}
 	return Promise.all(promises);
 }).then(characters => {
-	return characters.filter(character => {
-		return !!character.thumbnail;
-		debugger;
-	});
+	return characters.filter(character => !!character.thumbnail);
 }).then(characters => {
 	debugger;
 	$('.Card').each((i, item) => {
