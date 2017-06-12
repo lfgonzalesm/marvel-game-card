@@ -35,28 +35,30 @@ api.findSeries('avengers'
   );
 }).then(characters => {
   // aqui tenemos solo personajes que *si* tienen imagen
-  $('.Card').each((i, item) => {
-    // por cada <div class="Card">
+  for (let i = 0; i < 5; i++) {
     let character = characters[i];
-    // character el personaje i, es decir que cambia con cada Card
-    let $this = $(item);
-    let $image = $this.find('.Card-image');
-    let $description = $this.find('.Card-description');
-    let $name = $this.find('.Card-name');
-
-    $image.attr('src', `${character.thumbnail.path}.${character.thumbnail.extension}`
-    // Cambiar la imagen
-    );$name.text(character.name
-    // Cambiar el nombre
-    );$description.text(character.description
-    // Cambiar la descripcion
-    );
+    let template = renderCharacter(character);
+    let $card = $(template);
+    $('.Battle-player').append($card);
+    debugger;
   }
+
   // por cada carta
   // cambiar image .Card-image
   // cambiar .Card-description
   // cambiar .Card-name
-  );
 }).catch(err => {
   console.error(err);
 });
+
+function renderCharacter(character) {
+
+  return `<div class="Card ">
+    <div class="Card-container">
+      <h2 class="Card-name">${character.name}</h2><img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="wolverine" class="Card-image">
+      <div class="Card-description">${character.description}</div>
+      <div class="Card-attack">500 puntos de ataque</div>
+    </div>
+    <div class="Card-backface"> </div>
+  </div>`;
+}
