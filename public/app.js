@@ -1,7 +1,7 @@
 var $ = window.jQuery;
 var marvelApi = window.MarvelApi;
 
-var key = 'a548aee0bde874ea460773884934a865';
+var key = 'ac216bd32a94cf50cbcceb2f71ee590a';
 var api = new MarvelApi(key);
 
 api.findSeries('avengers'
@@ -35,16 +35,18 @@ api.findSeries('avengers'
   );
 }).then(characters => {
   // aqui tenemos solo personajes que *si* tienen imagen
-
   characters = shuffle(characters);
-
   for (let i = 0; i < 5; i++) {
     let character = characters[i];
     let template = renderCharacter(character);
     let $card = $(template);
     $('.Battle-player').append($card);
+    $card.on('click', function (event) {
+      let $this = $(this);
+      let attack = $this.find('.Card-attack');
+      console.log(attack.data('attack'));
+    });
   }
-
   // por cada carta
   // cambiar image .Card-image
   // cambiar .Card-description
@@ -52,7 +54,6 @@ api.findSeries('avengers'
 }).catch(err => {
   console.error(err);
 });
-
 function renderCharacter(character) {
   let attackPoints = Math.ceil(Math.random() * 500) + 500;
   //genera un numero del 5000 al 1000
@@ -60,7 +61,7 @@ function renderCharacter(character) {
     <div class="Card-container">
       <h2 class="Card-name">${character.name}</h2><img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="wolverine" class="Card-image">
       <div class="Card-description">${character.description}</div>
-      <div class="Card-attack">${attackPoints} puntos de ataque</div>
+      <div class="Card-attack" data-attack="${attackPoints}">${attackPoints} puntos de ataque</div>
     </div>
     <div class="Card-backface"> </div>
   </div>`;
